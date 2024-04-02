@@ -10,7 +10,8 @@ import java.sql.*;
  */
 public class CRUD {
 
-    private Double km, cm, m;
+    private Double angka1, hasil;
+    private String param1, param2;
     private PreparedStatement psmt;
     private Connection koneksi;
     private String query;
@@ -21,66 +22,48 @@ public class CRUD {
         koneksi = conn.getKoneksi();
     }
 
-    
     //membuat setter dan getter
-    public void setkmToM(Double km1) {
-        this.km = km1;
+    public Double getAngka1() {
+        return angka1;
     }
 
-    public Double getkmToM() {
-        return km;
+    public void setAngka1(Double angka1) {
+        this.angka1 = angka1;
     }
 
-    public void setkmToCm(Double km2) {
-        this.km = km2;
+    public Double getHasil() {
+        return hasil;
     }
 
-    public Double getkmToCm() {
-        return km;
+    public void setHasil(Double hasil) {
+        this.hasil = hasil;
     }
 
-    public void setmToKm(Double m1) {
-        this.m = m1;
+    public String getParam1() {
+        return param1;
     }
 
-    public Double getmToKm() {
-        return m;
+    public void setParam1(String param1) {
+        this.param1 = param1;
     }
 
-    public void setmToCm(Double m2) {
-        this.m = m2;
+    public String getParam2() {
+        return param2;
     }
 
-    public Double getmToCm() {
-        return m;
-    }
-
-    public void setcmToKm(Double cm1) {
-        this.cm = cm1;
-    }
-
-    public Double getcmToKm() {
-        return cm;
-    }
-
-    public void setcmToM(Double cm2) {
-        this.cm = cm2;
-    }
-
-    public Double getcmToM() {
-        return m;
+    public void setParam2(String param2) {
+        this.param2 = param2;
     }
 
     //membuat fungsi insert data
-    public void simpanData(Double km1, Double km2, Double m1, Double m2, Double cm1, Double cm2) {
-        query = "insert into konvers (?, ?, ?, ?, ?, ?)";
+    public void simpanData(Double angka1, String param1, String param2, Double hasil) {
+        query = "insert into konvers (angka1, param1, param2, hasil) values (?, ?, ?, ?)";
         try {
-            psmt.setDouble(1, km1);
-            psmt.setDouble(2, km2);
-            psmt.setDouble(3, m1);
-            psmt.setDouble(4, m2);
-            psmt.setDouble(5, cm1);
-            psmt.setDouble(6, m2);
+            psmt = koneksi.prepareStatement(query);
+            psmt.setDouble(1, angka1);
+            psmt.setString(2, param1);
+            psmt.setString(3, param2);
+            psmt.setDouble(4, hasil);
             psmt.executeUpdate();
             psmt.close();
         } catch (Exception ex) {

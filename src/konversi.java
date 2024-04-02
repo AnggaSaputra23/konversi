@@ -5,7 +5,6 @@ import javax.swing.JOptionPane;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author Asus
@@ -49,6 +48,11 @@ public class konversi extends javax.swing.JFrame {
         txt1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt1ActionPerformed(evt);
+            }
+        });
+        txt1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txt1KeyTyped(evt);
             }
         });
 
@@ -125,42 +129,49 @@ public class konversi extends javax.swing.JFrame {
     }//GEN-LAST:event_txt1ActionPerformed
 
     private void btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActionPerformed
-        // TODO add your handling code here:
-        Double angka1, hasil = null;
-//        Double km = null, cm = null, m = null;
-        String variable;
+        try {
+            Double angka1, hasil = null;
+            String param1, param2;
 
-        angka1 = Double.valueOf(txt1.getText());
-        variable = (String) box1.getSelectedItem();
-        variable = (String) box2.getSelectedItem();
+            angka1 = Double.valueOf(txt1.getText());
+            param1 = (String) box1.getSelectedItem();
+            param2 = (String) box2.getSelectedItem();
 
-        if (variable.equals("Kilometer") && variable.equals("Meter")) {
-            hasil = angka1 / 1000;
-        } else if (variable.equals("Kilometer") && variable.equals("Centimeter")) {
-            hasil = angka1 / 100000;
-        }else if(variable.equals("Meter") && variable.equals("Kilometer")){
-            hasil = angka1 * 1000; 
-        }else if(variable.equals("Meter") && variable.equals("Centimeter")){
-            hasil = angka1 / 1000;
-        }else if(variable.equals("Centimeter") && variable.equals("Kilometer")){
-            hasil = angka1 * 100000;
-        }else if(variable.equals("Centimeter") && variable.equals("Meter")){
-            hasil = angka1 * 1000;
-        }
-        
-        try{
-            a.setkmToM(hasil);
-            a.setkmToCm(hasil);
-            a.setmToKm(hasil);
-            a.setmToCm(hasil);
-            a.setcmToM(hasil);
-            a.setcmToKm(hasil);
-            a.simpanData(a.getkmToM(), a.getkmToCm(), a.getmToKm(), a.getmToCm(), a.getcmToKm(), a.getcmToM());
-            JOptionPane.showMessageDialog(null, hasil);
-        }catch(Exception ex){
+            if (param1.equals("Kilometer") && param2.equals("Meter")) {
+                hasil = angka1 * 1000;
+            } else if (param1.equals("Kilometer") && param2.equals("Centimeter")) {
+                hasil = angka1 / 100000;
+            } else if (param1.equals("Meter") && param2.equals("Kilometer")) {
+                hasil = angka1 / 1000;
+            } else if (param1.equals("Meter") && param2.equals("Centimeter")) {
+                hasil = angka1 / 100;
+            } else if (param1.equals("Centimeter") && param2.equals("Kilometer")) {
+                hasil = angka1 * 100000;
+            } else if (param1.equals("Centimeter") && param2.equals("Meter")) {
+                hasil = angka1 * 100;
+            }
+            
+            String hasilString = String.valueOf(hasil);
+            txt2.setText(hasilString);
+
+            a.setAngka1(angka1);
+            a.setParam1(param1);
+            a.setParam2(param2);
+            a.setHasil(hasil);
+            a.simpanData(a.getAngka1(), a.getParam1(), a.getParam2(), a.getHasil());
+        } catch (Exception ex) {
             System.out.println(ex);
         }
     }//GEN-LAST:event_btnActionPerformed
+
+    private void txt1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt1KeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+
+        if (!Character.isDigit(c)) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txt1KeyTyped
 
     /**
      * @param args the command line arguments
